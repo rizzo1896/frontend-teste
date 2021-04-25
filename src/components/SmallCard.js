@@ -28,6 +28,15 @@ const Name = styled.div`
   font-weight: 600;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration:none;
+  color: inherit;
+
+  &:visited{
+    color: #1e3a8a;
+  }
+`
+
 const Country = styled.div`
   font-weight: 500;
   font-size: 14px;
@@ -75,7 +84,6 @@ const trending = (
 
 const SmallCard = () => {
   const { loading, error, data } = useQuery(INFO_PERSONS);
-  console.log(data)
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -92,14 +100,16 @@ const SmallCard = () => {
           return (
             <>{
               <ContentBox key={index}>
-                <div>
-                  <img src={item.avatar} alt="Avatar" width="48" height="48" />
-                </div>
+                <StyledLink to={`/profile/:${item.id}`}>
+                  <div>
+                    <img src={item.avatar} alt="Avatar" width="48" height="48" />
+                  </div>
+                </StyledLink>
                 <Info>
                   <Name>
-                    <Link to={`/profile/:${item.id}`}>
+                    <StyledLink to={`/profile/:${item.id}`}>
                       {`${item.firstName} ${item.lastName}`}{" "}
-                    </Link>
+                    </StyledLink>
                     {item.attendanceRate >= 0.5 ? trending : ""}
                   </Name>
                   <Country>
