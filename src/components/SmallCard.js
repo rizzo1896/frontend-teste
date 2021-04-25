@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import ReactCountryFlag from "react-country-flag";
 import { useQuery } from "@apollo/client";
-import INFO_PERSON from "../query/index";
+import INFO_PERSONS from "../query/index";
+import { Link } from 'react-router-dom'
 
 const ContentBox = styled.div`
   box-sizing: border-box;
@@ -73,7 +74,7 @@ const trending = (
 );
 
 const SmallCard = () => {
-  const { loading, error, data } = useQuery(INFO_PERSON);
+  const { loading, error, data } = useQuery(INFO_PERSONS);
   console.log(data)
   if (loading) {
     return <p>Loading...</p>;
@@ -96,7 +97,9 @@ const SmallCard = () => {
                 </div>
                 <Info>
                   <Name>
-                    {`${item.firstName} ${item.lastName}`}{" "}
+                    <Link to={`/profile/:${item.id}`}>
+                      {`${item.firstName} ${item.lastName}`}{" "}
+                    </Link>
                     {item.attendanceRate >= 0.5 ? trending : ""}
                   </Name>
                   <Country>

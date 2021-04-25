@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-const INFO_PERSONS = gql`
+const INFO_PERSON = gql`
   query {
-    attendees {
+    attendee(id: "23f9b39e-a10a-43c7-be18-c60713477a7e") {
       id
       firstName
       lastName
@@ -18,4 +18,4 @@ const INFO_PERSONS = gql`
     }
   }
 `;
-export default INFO_PERSONS;
+export default INFO_PERSON;

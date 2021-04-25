@@ -104,7 +104,7 @@ const StyledLink = styled(Link)`
 `;
 
 const ButtonFilter = styled.select`
-  width: 160px;
+  width: inherit;
   height: 40px;
   border-radius: 8px;
   font-size: 14px;
