@@ -11,7 +11,7 @@ import INFO_PERSON from "../query/index";
 
 const ContentBox = styled.div`
   box-sizing: border-box;
-  width: 1392px;
+  width: auto;
   height: 192px;
   background-color: #fff;
   border-radius: 12px;
@@ -57,6 +57,7 @@ const Name = styled.div`
 
   @media (max-width: 425px) {
     text-align: center;
+    width:inherit;
   }
 `;
 
