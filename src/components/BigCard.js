@@ -33,12 +33,16 @@ const InfoBox = styled.div`
   height: 100px;
   width: inherit;
   margin-left: 20px;
+
+  @media(min-width: 450px)and (max-width:670px){
+    width:inherit;
+  }
 `;
 
 const Details = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: inherit;
+  width: 460px;
 
   @media (max-width: 425px) {
     width: 200px;
