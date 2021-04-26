@@ -7,6 +7,20 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 24px;
+
+  @media (min-width: 426px) and (max-width: 768px) {
+    width: 630px;
+  }
+
+  @media (max-width: 768px) {
+
+    margin: 10px auto;
+  }
+
+  @media (max-width: 350px) {
+    width: 300px;
+    margin: 10px auto;
+  }
 `;
 
 const Content = styled.div`
@@ -21,6 +35,10 @@ const Content = styled.div`
     width: 343px;
     height: 500px;
   }
+
+  @media (max-width: 350px) {
+    width: 280px;
+  }
 `;
 
 const ItemForm = styled.div`
@@ -34,8 +52,22 @@ const ItemForm = styled.div`
   font-size: 16px;
   font-weight: 600;
 
+  @media (min-width: 426px) and (max-width: 768px) {
+    width: 600px;
+    height: 40px;
+    margin-left: 16px;
+    margin-bottom: 40px;
+  }
+
   @media (max-width: 425px) {
     width: 311px;
+    height: 40px;
+    margin-left: 16px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 350px) {
+    width: 250px;
     height: 40px;
     margin-left: 16px;
     margin-bottom: 40px;
@@ -93,8 +125,16 @@ const ButtonForm = styled.button`
   font-size: 14px;
   font-weight: 600;
 
+  @media (min-width: 426px) and (max-width: 768px) {
+    width: 290px;
+  }
+
   @media (max-width: 425px) {
     width: 147px;
+  }
+
+  @media (max-width: 350px) {
+    width: 120px;
   }
 `;
 

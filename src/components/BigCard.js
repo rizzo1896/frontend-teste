@@ -31,7 +31,7 @@ const ContentBox = styled.div`
 
 const InfoBox = styled.div`
   height: 100px;
-  width: 500px;
+  width: inherit;
   margin-left: 20px;
 `;
 
@@ -84,6 +84,7 @@ const ImgFlag = styled(ReactCountryFlag)`
 
 const Space = styled.span`
   padding-left: 8px;
+  overflow-x: hidden;
 `;
 
 const trending = (
