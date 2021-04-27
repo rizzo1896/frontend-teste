@@ -1,6 +1,9 @@
 {
   "name": "credistartest",
   "version": "0.1.0",
+  "engines": {
+    "node": "14.1.0"
+  },
   "private": true,
   "homepage": ".",
   "dependencies": {
