@@ -126,26 +126,33 @@ const trending = (
 );
 
 const LoadAnimation = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 10px solid gray;
-  border-bottom: 10px solid transparent;
-  animation: spin 0.9s linear infinite;
-  @-moz-keyframes spin {
-    100% {
-      -moz-transform: rotate(360deg);
+  display: flex;
+  width: auto;
+  height: 70vh;
+  align-items: center;
+  justify-content: center;
+  span {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 10px solid gray;
+    border-bottom: 10px solid transparent;
+    animation: spin 0.9s linear infinite;
+    @-moz-keyframes spin {
+      100% {
+        -moz-transform: rotate(360deg);
+      }
     }
-  }
-  @-webkit-keyframes spin {
-    100% {
-      -webkit-transform: rotate(360deg);
+    @-webkit-keyframes spin {
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
     }
-  }
-  @keyframes spin {
-    100% {
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
+    @keyframes spin {
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
     }
   }
 `;
@@ -168,9 +175,9 @@ const BigCard = () => {
 
   if (called & loading) {
     return (
-      <p>
-        <LoadAnimation />
-      </p>
+      <LoadAnimation>
+        <span></span>
+      </LoadAnimation>
     );
   }
 
