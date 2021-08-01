@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
+import gql from 'graphql-tag'
 
 const INFO_PERSON = gql`
-  query {
-    attendee(id: "23f9b39e-a10a-43c7-be18-c60713477a7e") {
+  query ($user: ID!) {
+    attendee(id: $user) {
       id
       firstName
       lastName
@@ -18,4 +18,5 @@ const INFO_PERSON = gql`
     }
   }
 `;
-export default INFO_PERSON;
+
+export default INFO_PERSON

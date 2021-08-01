@@ -100,14 +100,14 @@ const SmallCard = () => {
           return (
             <>{
               <ContentBox key={index}>
-                <StyledLink to={`/profile/:${item.id}`}>
+                <StyledLink to={`/profile/${item.id}`}>
                   <div>
                     <img src={item.avatar} alt="Avatar" width="48" height="48" />
                   </div>
                 </StyledLink>
                 <Info>
                   <Name>
-                    <StyledLink to={`/profile/:${item.id}`}>
+                    <StyledLink to={`/profile/${item.id}`}>
                       {`${item.firstName} ${item.lastName}`}{" "}
                     </StyledLink>
                     {item.attendanceRate >= 0.5 ? trending : ""}

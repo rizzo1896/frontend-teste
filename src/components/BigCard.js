@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import CheckCircleOutlinedIcon from "@material-ui/icons/CheckCircleOutlined";
 import BarChartOutlinedIcon from "@material-ui/icons/BarChartOutlined";
+import { gql, useQuery, useLazyQuery } from "@apollo/client";
+
+import { useParams } from "react-router-dom";
 
 import ReactCountryFlag from "react-country-flag";
-import { useQuery } from "@apollo/client";
-import INFO_PERSON from "../query/index";
-
+import INFO_PERSON from "../query/person";
+import { useEffect } from "react";
 
 const ContentBox = styled.div`
   box-sizing: border-box;
@@ -34,8 +36,8 @@ const InfoBox = styled.div`
   width: inherit;
   margin-left: 20px;
 
-  @media(min-width: 450px)and (max-width:670px){
-    width:inherit;
+  @media (min-width: 450px) and (max-width: 670px) {
+    width: inherit;
   }
 `;
 
@@ -61,7 +63,7 @@ const Name = styled.div`
 
   @media (max-width: 425px) {
     text-align: center;
-    width:inherit;
+    width: inherit;
   }
 `;
 
@@ -83,8 +85,8 @@ const InfoItem = styled.div`
 `;
 
 const ImgFlag = styled(ReactCountryFlag)`
-  margin-right:5px;
-`
+  margin-right: 5px;
+`;
 
 const Space = styled.span`
   padding-left: 8px;
@@ -124,8 +126,18 @@ const trending = (
 );
 
 const BigCard = () => {
-  const { loading, error, data } = useQuery(INFO_PERSON);
+  const [param, setParam] = useState("");
+  let { cat } = useParams();
 
+  useEffect(() => {
+    setParam(cat);
+  }, []);
+
+  const { loading, error, data } = useQuery(INFO_PERSON, {
+    variables: {
+      user: param,
+    },
+  });
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -133,45 +145,44 @@ const BigCard = () => {
   if (error) {
     return <p>an error occurred...</p>;
   }
-
+  let user = data.attendee;
   return (
     <>
-      {data.attendees.map((item, index) => {
-        console.log(data)
-        return (
-          <ContentBox>
-            <div>
-              <img src={item.avatar} width="128" height="128" alt="Avatar" />
-            </div>
-            <InfoBox>
-              <Name>{`${item.firstName} ${item.lastName}`} {item.attendanceRate >= 0.5 ? trending : ""}</Name>
-              <Details>
-                <InfoItem>
-                  <EmailOutlinedIcon fontSize="small" />
-                  <Space>{item.email}</Space>
-                </InfoItem>
-                <InfoItem>
-                  <ImgFlag
-                    countryCode={item.country.id}
-                    svg
-                    title={item.country.name}
-                  />
-                  <Space>{item.country.name}</Space>
-                </InfoItem>
-
-                <InfoItem>
-                  <CheckCircleOutlinedIcon fontSize="small" />
-                  <Space>Attended sessions: {item.sessions}</Space>
-                </InfoItem>
-                <InfoItem>
-                  <BarChartOutlinedIcon fontSize="small" />
-                  <Space>Attendance rate: {(item.attendanceRate * 100).toFixed(0)}%</Space>
-                </InfoItem>
-              </Details>
-            </InfoBox>
-          </ContentBox>
-        )
-      })}
+      <ContentBox>
+        <div>
+          <img src={user.avatar} width="128" height="128" alt="Avatar" />
+        </div>
+        <InfoBox>
+          <Name>
+            {`${user.firstName} ${user.lastName}`}{" "}
+            {user.attendanceRate >= 0.5 ? trending : ""}
+          </Name>
+          <Details>
+            <InfoItem>
+              <EmailOutlinedIcon fontSize="small" />
+              <Space>{user.email}</Space>
+            </InfoItem>
+            <InfoItem>
+              <ImgFlag
+                countryCode={user.country.id}
+                svg
+                title={user.country.name}
+              />
+              <Space>{user.country.name}</Space>
+            </InfoItem>
+            <InfoItem>
+              <CheckCircleOutlinedIcon fontSize="small" />
+              <Space>Attended sessions: {user.sessions}</Space>
+            </InfoItem>
+            <InfoItem>
+              <BarChartOutlinedIcon fontSize="small" />
+              <Space>
+                Attendance rate: {(user.attendanceRate * 100).toFixed(0)}%
+              </Space>
+            </InfoItem>
+          </Details>
+        </InfoBox>
+      </ContentBox>
     </>
   );
 };
