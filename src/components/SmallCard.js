@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReactCountryFlag from "react-country-flag";
 import { useQuery } from "@apollo/client";
 import INFO_PERSONS from "../query/index";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const ContentBox = styled.div`
   box-sizing: border-box;
@@ -29,26 +29,26 @@ const Name = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  text-decoration:none;
+  text-decoration: none;
   color: inherit;
 
-  &:visited{
+  &:visited {
     color: #1e3a8a;
   }
-`
+`;
 
 const Country = styled.div`
   font-weight: 500;
   font-size: 14px;
   color: #4b5563;
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 const ImgFlag = styled(ReactCountryFlag)`
-  margin-right:10px;
-`
+  margin-right: 10px;
+`;
 
 const trending = (
   <svg
@@ -82,10 +82,35 @@ const trending = (
   </svg>
 );
 
+const LoadAnimation = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 10px solid gray;
+  border-bottom: 10px solid transparent;
+  animation: spin .9s linear infinite;
+  @-moz-keyframes spin {
+    100% {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @keyframes spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 const SmallCard = () => {
   const { loading, error, data } = useQuery(INFO_PERSONS);
   if (loading) {
-    return <p>Loading...</p>;
+    return <p><LoadAnimation /></p>;
   }
 
   if (error) {
@@ -94,15 +119,19 @@ const SmallCard = () => {
 
   return (
     <>
-      {
-
-        data.attendees.map((item, index) => {
-          return (
-            <>{
+      {data.attendees.map((item, index) => {
+        return (
+          <>
+            {
               <ContentBox key={index}>
                 <StyledLink to={`/profile/${item.id}`}>
                   <div>
-                    <img src={item.avatar} alt="Avatar" width="48" height="48" />
+                    <img
+                      src={item.avatar}
+                      alt="Avatar"
+                      width="48"
+                      height="48"
+                    />
                   </div>
                 </StyledLink>
                 <Info>
@@ -123,9 +152,9 @@ const SmallCard = () => {
                 </Info>
               </ContentBox>
             }
-            </>);
-        })
-      }
+          </>
+        );
+      })}
     </>
   );
 };

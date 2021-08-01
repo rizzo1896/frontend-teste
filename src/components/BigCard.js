@@ -3,7 +3,7 @@ import styled from "styled-components";
 import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import CheckCircleOutlinedIcon from "@material-ui/icons/CheckCircleOutlined";
 import BarChartOutlinedIcon from "@material-ui/icons/BarChartOutlined";
-import { gql, useQuery, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 
 import { useParams } from "react-router-dom";
 
@@ -101,20 +101,20 @@ const trending = (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clip-path="url(#clip0)">
+    <g clipPath="url(#clip0)">
       <path
         d="M15.3334 4L9.00002 10.3333L5.66669 7L0.666687 12"
         stroke="#059669"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M11.3333 4H15.3333V8"
         stroke="#059669"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </g>
     <defs>
@@ -125,24 +125,56 @@ const trending = (
   </svg>
 );
 
+const LoadAnimation = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 10px solid gray;
+  border-bottom: 10px solid transparent;
+  animation: spin 0.9s linear infinite;
+  @-moz-keyframes spin {
+    100% {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @keyframes spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 const BigCard = () => {
   const [param, setParam] = useState("");
   let { cat } = useParams();
 
   useEffect(() => {
     setParam(cat);
+    person();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { loading, error, data } = useQuery(INFO_PERSON, {
+  const [person, { called, loading, data }] = useLazyQuery(INFO_PERSON, {
     variables: {
       user: param,
     },
   });
-  if (loading) {
-    return <p>Loading...</p>;
+
+  if (called & loading) {
+    return (
+      <p>
+        <LoadAnimation />
+      </p>
+    );
   }
 
-  if (error) {
+  if (!called) {
     return <p>an error occurred...</p>;
   }
   let user = data.attendee;
