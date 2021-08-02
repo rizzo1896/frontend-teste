@@ -33,7 +33,7 @@ const HeaderLogo = styled.div`
   @media (max-width: 425px) {
     padding-left: 16px;
     padding-top: 16px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
   }
 `;
 
@@ -57,7 +57,7 @@ const ButtonArea = styled.div`
     width: 90vw;
     margin: auto;
     height: auto;
-    padding-bottom:20px;
+    padding-bottom: 20px;
   }
 `;
 
@@ -98,8 +98,8 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   padding-right: 24px;
 
-  @media (max-width: 425px){
-    padding-right:0;
+  @media (max-width: 425px) {
+    padding-right: 0;
   }
 `;
 
@@ -113,16 +113,15 @@ const ButtonFilter = styled.select`
   align-items: center;
   border: none;
   cursor: pointer;
-  outline:none;
+  outline: none;
   background-color: #e5e7eb;
   color: #111827;
   margin-right: 24px;
   justify-content: flex-start;
   padding-left: 20px;
 
-
   @media (max-width: 425px) {
-    margin-bottom:15px;
+    margin-bottom: 15px;
   }
 `;
 
@@ -136,8 +135,12 @@ const TextButton = styled.div`
   }
 `;
 
-
 const Header = (props) => {
+  const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    props.onChangeText(filter);
+  }, [props, filter]);
 
   return (
     <>
@@ -177,7 +180,7 @@ const Header = (props) => {
         </HeaderLogo>
         <ButtonArea>
           {props.showFilterButton === true && (
-            <ButtonFilter>
+            <ButtonFilter onChange={(e) => setFilter(e.target.value)}>
               <option value="">All attendees</option>
               <option value="potential">Potential prospects</option>
               <option value="JP">From Japan</option>

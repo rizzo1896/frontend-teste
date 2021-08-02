@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SmallCard from "../components/SmallCard";
 import Header from "../components/Header";
-
 
 const Content = styled.div`
   width: auto;
@@ -16,13 +15,22 @@ const MainContent = styled.div`
 `;
 
 const Home = () => {
+  const [filterValue, setFilterValue] = useState("");
+
+  function handleFilterSelect(newValue) {
+    setFilterValue(newValue);
+  }
 
   return (
     <>
-      <Header showFilterButton={true} showInviteButton={true}/>
+      <Header
+        onChangeText={handleFilterSelect}
+        showFilterButton={true}
+        showInviteButton={true}
+      />
       <Content>
         <MainContent>
-          <SmallCard></SmallCard>
+          <SmallCard newValueFilter={filterValue}></SmallCard>
         </MainContent>
       </Content>
     </>

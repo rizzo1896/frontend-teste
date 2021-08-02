@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+
 import styled from "styled-components";
 import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import CheckCircleOutlinedIcon from "@material-ui/icons/CheckCircleOutlined";
 import BarChartOutlinedIcon from "@material-ui/icons/BarChartOutlined";
-import { useLazyQuery } from "@apollo/client";
-
-import { useParams } from "react-router-dom";
-
 import ReactCountryFlag from "react-country-flag";
+
+import { useLazyQuery } from "@apollo/client";
 import INFO_PERSON from "../query/person";
-import { useEffect } from "react";
 
 const ContentBox = styled.div`
   box-sizing: border-box;
@@ -182,11 +182,17 @@ const BigCard = () => {
   }
 
   if (!called) {
-    return <p>an error occurred...</p>;
+    return <></>;
   }
   let user = data.attendee;
   return (
     <>
+    {/* HelmetProvider + Helmet para deixar o titulo da pagina dinamico*/}
+      <HelmetProvider>
+        <Helmet>
+          <title>User: {`${user.firstName} ${user.lastName}`}</title>
+        </Helmet>
+      </HelmetProvider>
       <ContentBox>
         <div>
           <img src={user.avatar} width="128" height="128" alt="Avatar" />

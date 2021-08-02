@@ -13,7 +13,7 @@ function App() {
             <Home />
           </Route>
           <Route path="/profile/:cat">
-            <Profile></Profile>
+            <Profile />
           </Route>
 
           <Route path="/invite">

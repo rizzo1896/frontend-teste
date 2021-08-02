@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ReactCountryFlag from "react-country-flag";
 import { useQuery } from "@apollo/client";
@@ -114,7 +114,13 @@ const LoadAnimation = styled.div`
   }
 `;
 
-const SmallCard = () => {
+const SmallCard = (props) => {
+  const [selectValue, newSelectValue] = useState("");
+
+  useEffect(() => {
+    newSelectValue(props.newValueFilter);
+  }, [props.newValueFilter]);
+
   const { loading, error, data } = useQuery(INFO_PERSONS);
   if (loading) {
     return (
@@ -127,14 +133,13 @@ const SmallCard = () => {
   if (error) {
     return <p>an error occurred...</p>;
   }
-
   return (
     <>
-      {data.attendees.map((item, index) => {
+      {data.attendees.map((item) => {
         return (
           <>
-            {
-              <ContentBox key={index}>
+            {item.attendanceRate >= 0.5 && selectValue === "potential" && (
+              <ContentBox key={item.id}>
                 <StyledLink to={`/profile/${item.id}`}>
                   <div>
                     <img
@@ -162,7 +167,69 @@ const SmallCard = () => {
                   </Country>
                 </Info>
               </ContentBox>
-            }
+            )}
+
+            {item.country.id === "JP" && selectValue === "JP" && (
+              <ContentBox key={item.id}>
+                <StyledLink to={`/profile/${item.id}`}>
+                  <div>
+                    <img
+                      src={item.avatar}
+                      alt="Avatar"
+                      width="48"
+                      height="48"
+                    />
+                  </div>
+                </StyledLink>
+                <Info>
+                  <Name>
+                    <StyledLink to={`/profile/${item.id}`}>
+                      {`${item.firstName} ${item.lastName}`}{" "}
+                    </StyledLink>
+                    {item.attendanceRate >= 0.5 ? trending : ""}
+                  </Name>
+                  <Country>
+                    <ImgFlag
+                      countryCode={item.country.id}
+                      svg
+                      title={item.country.name}
+                    />
+                    {` ${item.country.name}`}
+                  </Country>
+                </Info>
+              </ContentBox>
+            )}
+
+            {selectValue === "" && (
+              <ContentBox key={item.id}>
+                <StyledLink to={`/profile/${item.id}`}>
+                  <div>
+                    <img
+                      src={item.avatar}
+                      alt="Avatar"
+                      width="48"
+                      height="48"
+                    />
+                  </div>
+                </StyledLink>
+                <Info>
+                  <Name>
+                    <StyledLink to={`/profile/${item.id}`}>
+                      {`${item.firstName} ${item.lastName}`}{" "}
+                    </StyledLink>
+                    {item.attendanceRate >= 0.5 ? trending : ""}
+                  </Name>
+                  <Country>
+                    <ImgFlag
+                      countryCode={item.country.id}
+                      svg
+                      title={item.country.name}
+                    />
+                    {` ${item.country.name}`}
+                  </Country>
+                </Info>
+              </ContentBox>
+            )}
           </>
         );
       })}
