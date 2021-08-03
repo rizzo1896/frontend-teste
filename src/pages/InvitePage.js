@@ -140,6 +140,38 @@ const ButtonForm = styled.button`
   }
 `;
 
+const LoadAnimation = styled.div`
+  display: flex;
+  width: auto;
+  height: 70vh;
+  align-items: center;
+  justify-content: center;
+  span {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 10px solid gray;
+    border-bottom: 10px solid transparent;
+    animation: spin 0.9s linear infinite;
+    @-moz-keyframes spin {
+      100% {
+        -moz-transform: rotate(360deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+    @keyframes spin {
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+  }
+`;
+
 const InvitePage = () => {
   const initialFormData = Object.freeze({
     email: "",
@@ -151,6 +183,7 @@ const InvitePage = () => {
 
   // eslint-disable-next-line no-unused-vars
   const [filterValue, setFilterValue] = useState("");
+  const [disable, setDisable] = useState(true);
   const [formData, updateFormData] = useState(initialFormData);
   // eslint-disable-next-line no-unused-vars
   const [addClient, { data, loading, error }] = useMutation(ADD_PERSON, {
@@ -163,11 +196,12 @@ const InvitePage = () => {
         avatar: formData.avatar,
       },
     },
+    refetchQueries: ["attendees"],
   });
 
-  function handleFilterSelect(newValue) {
+  const handleFilterSelect = (newValue) => {
     setFilterValue(newValue);
-  }
+  };
 
   const handleChange = (e) => {
     updateFormData({
@@ -179,10 +213,14 @@ const InvitePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addClient();
-    // console.log(formData);
   };
 
-  if (loading) return "Submitting...";
+  if (loading)
+    return (
+      <LoadAnimation>
+        <span></span>
+      </LoadAnimation>
+    );
   if (error) return `Submission error! ${error.message}`;
 
   return (
@@ -237,14 +275,19 @@ const InvitePage = () => {
             </ItemForm>
 
             <ButtonContainer>
-              <Link to="/">
-                <ButtonForm style={{ color: "rgba(17, 24, 39, 1)" }}>
+              <ButtonForm style={{ color: "#111827" }}>
+                <Link
+                  to="/"
+                  style={{ textDecoration: "none", color: "#111827" }}
+                >
                   Cancel
-                </ButtonForm>
-              </Link>
+                </Link>
+              </ButtonForm>
+
               <ButtonForm
                 onClick={handleSubmit}
                 style={{ backgroundColor: "#2563eb", color: "#fff" }}
+                disabled={disable}
               >
                 Save
               </ButtonForm>

@@ -1,5 +1,11 @@
 # Credistar teste
 
-[ ] Adicionar novo usuario, falta criar a requisição no client
+- Formulario nao pode estar vazio
+- Atualizar o cache
+
+<!-- Para resetar a lista de usuarios no playground -->
+<!-- mutation reset{
+  reset
+} -->
 
 https://credistarteste.netlify.app/
