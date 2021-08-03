@@ -1,16 +1,8 @@
 import { gql } from "@apollo/client";
 
 const ADD_CLIENT = gql`
-  mutation {
-    createAttendee(
-      input: {
-        firstName: $firstName
-        lastName: $lastName
-        email: $email
-        countryCode: $countryCode
-        avatar: $avatar
-      }
-    ) {
+  mutation createAttendee($input: CreateAttendeeInput!) {
+    createAttendee(input: $input) {
       firstName
       lastName
       email

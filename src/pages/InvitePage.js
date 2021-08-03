@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import ADD_PERSON from "../mutations";
 
 const Container = styled.div`
   display: flex;
@@ -139,12 +141,45 @@ const ButtonForm = styled.button`
 `;
 
 const InvitePage = () => {
+  const initialFormData = Object.freeze({
+    email: "",
+    firstName: "",
+    lastName: "",
+    country: "",
+    avatar: "",
+  });
+
   // eslint-disable-next-line no-unused-vars
   const [filterValue, setFilterValue] = useState("");
+  const [formData, updateFormData] = useState(initialFormData);
+  const [addClient, { data, loading, error }] = useMutation(ADD_PERSON, {
+    variables: {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      countryCode: formData.country,
+      avatar: formData.avatar,
+    },
+  });
 
   function handleFilterSelect(newValue) {
     setFilterValue(newValue);
   }
+
+  const handleChange = (e) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addClient();
+  };
+
+  if (loading) return "Submitting...";
+  if (error) return `Submission error! ${error.message}`;
 
   return (
     <>
@@ -164,20 +199,20 @@ const InvitePage = () => {
           <form>
             <ItemForm>
               Email <br />
-              <InputForm type="email" />
+              <InputForm type="email" name="email" onChange={handleChange} />
             </ItemForm>
             <ItemForm>
               First name <br />
-              <InputForm type="text" />
+              <InputForm type="text" name="firstName" onChange={handleChange} />
             </ItemForm>
             <ItemForm>
               Last name <br />
-              <InputForm type="text" />
+              <InputForm type="text" name="lastName" onChange={handleChange} />
             </ItemForm>
 
             <ItemForm>
               Country <br />
-              <SelectForm>
+              <SelectForm name="country" onChange={handleChange}>
                 <option value="" defaultValue>
                   Select a country
                 </option>
@@ -190,8 +225,10 @@ const InvitePage = () => {
             <ItemForm>
               Avatar <br />
               <InputForm
-                type="select"
+                type="text"
                 style={{ color: "rgba(17, 24, 39, 1)" }}
+                name="avatar"
+                onChange={handleChange}
               />
             </ItemForm>
 
@@ -201,7 +238,10 @@ const InvitePage = () => {
                   Cancel
                 </ButtonForm>
               </Link>
-              <ButtonForm style={{ backgroundColor: "#2563eb", color: "#fff" }}>
+              <ButtonForm
+                onClick={handleSubmit}
+                style={{ backgroundColor: "#2563eb", color: "#fff" }}
+              >
                 Save
               </ButtonForm>
             </ButtonContainer>
