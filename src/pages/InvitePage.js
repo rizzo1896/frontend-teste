@@ -152,13 +152,16 @@ const InvitePage = () => {
   // eslint-disable-next-line no-unused-vars
   const [filterValue, setFilterValue] = useState("");
   const [formData, updateFormData] = useState(initialFormData);
+  // eslint-disable-next-line no-unused-vars
   const [addClient, { data, loading, error }] = useMutation(ADD_PERSON, {
     variables: {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      countryCode: formData.country,
-      avatar: formData.avatar,
+      input: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        countryCode: formData.country,
+        avatar: formData.avatar,
+      },
     },
   });
 
@@ -176,6 +179,7 @@ const InvitePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addClient();
+    // console.log(formData);
   };
 
   if (loading) return "Submitting...";
