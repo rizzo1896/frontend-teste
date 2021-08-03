@@ -18,6 +18,7 @@
     "graphql": "^15.5.0",
     "graphql-request": "^3.5.0",
     "graphql-tag": "^2.12.5",
+    "netlify-cli": "^5.4.7",
     "react": "^17.0.2",
     "react-country-flag": "^2.3.0",
     "react-dom": "^17.0.2",
@@ -41,5 +42,10 @@
       "react-app/jest"
     ]
   },
-  "browserslist": [">0.3%", "not ie 11", "not dead", "not op_mini all"]
+  "browserslist": [
+    ">0.3%",
+    "not ie 11",
+    "not dead",
+    "not op_mini all"
+  ]
 }
