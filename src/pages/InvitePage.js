@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 
@@ -13,7 +14,6 @@ const Container = styled.div`
   }
 
   @media (max-width: 768px) {
-
     margin: 10px auto;
   }
 
@@ -139,14 +139,26 @@ const ButtonForm = styled.button`
 `;
 
 const InvitePage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [filterValue, setFilterValue] = useState("");
+
+  function handleFilterSelect(newValue) {
+    setFilterValue(newValue);
+  }
+
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Invite page</title>
+        </Helmet>
+      </HelmetProvider>
       <Header
         titleName={"Invite someone"}
+        onChangeText={handleFilterSelect}
         showFilterButton={false}
         showInviteButton={false}
       ></Header>
-
       <Container>
         <Content>
           <form>
@@ -166,7 +178,7 @@ const InvitePage = () => {
             <ItemForm>
               Country <br />
               <SelectForm>
-                <option value="" selected>
+                <option value="" defaultValue>
                   Select a country
                 </option>
                 <option value="FR">France</option>
