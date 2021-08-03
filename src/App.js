@@ -7,7 +7,7 @@ import InvitePage from "./pages/InvitePage";
 function App() {
   return (
     <>
-      <Router basename="/">
+      <Router>
         <Switch>
           <Route exact path="/">
             <Home />
