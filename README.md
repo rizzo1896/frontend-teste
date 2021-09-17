@@ -1,7 +1,8 @@
-# Credistar teste
+# Projeto React
 
-- Formulario nao pode estar vazio
-- Atualizar o cache
+- Listagem de usuarios em cards
+- Pagina para acessar somente os detalhes do usuario selecionado
+
 
 <!-- Para resetar a lista de usuarios no playground -->
 <!-- mutation reset{
